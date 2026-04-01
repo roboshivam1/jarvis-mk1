@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+jarvis_env/
+venv/
+
+# Models / caches
+.cache/
+*.wav
+
+# Mac
+.DS_Store
