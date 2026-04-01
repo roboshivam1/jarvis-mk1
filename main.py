@@ -1,6 +1,12 @@
 import requests
 from listener import record_audio, transcribe_audio
 from speaker import speak
+from brain.intent_classifier import classify_intent
+from brain.command_router import detect_command
+
+from actions.system_actions import open_app
+from actions.web_actions import open_url, google_search
+
 import os
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
@@ -69,7 +75,7 @@ def summarize_memory(): #summarizes older memory to reduce tokens.
     for role, text in conversation:
         text_to_summarize += f"{role}: {text}"
     
-    prompt = f"""
+    prompt = f"""           
 Summarize the following conversation into short key points for memory.
 Keep only important context.
 
@@ -99,18 +105,37 @@ if __name__=="__main__": #MAIN LOOP
             print("JARVIS: Goodbye!")
             break
 
-        prompt = build_prompt(user_input)
+        intent = classify_intent(user_input).lower()
+        print("Intent: ", intent)
 
-        reply = ask_jarvis(prompt)
+        if intent == "chat":
+            prompt = build_prompt(user_input)
 
-        print("JARVIS:", reply, "\n")
-        reply = reply.replace("\n", " ")
-        speak(reply)
+            reply = ask_jarvis(prompt)
 
-        update_conversation(user_input, reply)
+            print("JARVIS:", reply, "\n")
+            reply = reply.replace("\n", " ")
+            speak(reply)
 
-        if len(conversation) >= MAX_TURNS*2:
-            print("(Summarizing memory...)")
-            summarize_memory()
+            update_conversation(user_input, reply)
+
+            if len(conversation) >= MAX_TURNS*2:
+                print("(Summarizing memory...)")
+                summarize_memory()
         
-        os.remove(audio_file)
+            os.remove(audio_file)
+        
+        if intent == "command":
+            
+            try:
+                action, value = detect_command(user_input)
+
+                if action == "open_app":
+                    speak(open_app(value))
+                
+                elif action == "open_url":
+                    speak(open_url(value))
+            except Exception as e:
+                speak("Failed to open app or website.")
+                print(e)
+
