@@ -7,7 +7,7 @@ from pynput import keyboard
 from faster_whisper import WhisperModel
 
 class JarvisEars:
-    def __init__(self, model_size: str = "base.en"):
+    def __init__(self, model_size: str = "medium"):
         """
         Initializes the Push-to-Talk engine using faster_whisper.
         """

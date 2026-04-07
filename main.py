@@ -3,14 +3,18 @@ from brain import JarvisBrain
 from stt import JarvisEars
 from tts import JarvisMouth
 
-SYSTEM_PROMPT = """
-You are JARVIS, a highly intelligent and concise AI assistant.
-Always keep your verbal responses brief and to the point.
-"""
+SYSTEM_PROMPT = (
+        "You are JARVIS, a highly intelligent AI assistant. "
+        "Keep your verbal responses brief and to the point. "
+        "CRITICAL RULE: ONLY use tools if the user EXPLICITLY asks for them "
+        "(e.g., asking for the time, battery, or opening an app). "
+        "If the user just says hello, chats, or asks general knowledge questions, "
+        "DO NOT use any tools. Just respond naturally."
+    )
 
 def initialize_jarvis():
     """
-    Boots up all JARVIS subsyatems and returns the initialized objects
+    Boots up all JARVIS subsystems and returns the initialized objects
     """
     print("[System] Booting up JARVIS protocols...")
 
@@ -28,42 +32,49 @@ def initialize_jarvis():
     print("[System] All modules loaded successfully.")
     return memory, brain, ears, mouth
 
+def print_banner():
+    banner = r"""
+    /$$$$$  /$$$$$$  /$$$$$$$  /$$    /$$ /$$$$$$  /$$$$$$ 
+   |__  $$ /$$__  $$| $$__  $$| $$   | $$|_  $$_/ /$$__  $$
+      | $$| $$  \ $$| $$  \ $$| $$   | $$  | $$  | $$  \__/
+      | $$| $$$$$$$$| $$$$$$$/|  $$ / $$/  | $$  |  $$$$$$ 
+ /$$  | $$| $$__  $$| $$__  $$ \  $$ $$/   | $$   \____  $$
+| $$  | $$| $$  | $$| $$  \ $$  \  $$$/    | $$   /$$  \ $$
+|  $$$$$$/| $$  | $$| $$  | $$   \  $/    /$$$$$$|  $$$$$$/
+ \______/ |__/  |__/|__/  |__/    \_/    |______/ \______/ 
+                                             
+    =================================
+    [ J.A.R.V.I.S. - MARK 1 ONLINE ]
+    =================================
+    """
+    # Using 'cyan' or 'blue' ANSI codes to make it look "techy"
+    print("\033[96m" + banner + "\033[0m")
+
+
 def run_jarvis():
-    """
-    The main continous loop for JARVIS
-    """
-
-    # Bring the systems online
+    print_banner() # <--- Put the banner here!
     memory, brain, ears, mouth = initialize_jarvis()
-
+    
     mouth.speak("All systems online. Good to see you, sir.")
-
+    
     while True:
         try:
-            #LISTEN
             user_text = ears.listen()
-
-            if not user_text:
-                continue
-
+            if not user_text: continue
+                
             print(f"\n[You]: {user_text}")
-
-            # --- Hardcoded Exit Commands ---
-            if "sleep jarvis" in user_text.lower() or "shut down" in user_text.lower() or "exit" in user_text.lower():
+            
+            if "sleep jarvis" in user_text.lower() or "shut down" in user_text.lower():
                 mouth.speak("Powering down. Goodbye, sir.")
                 break
-
-            # 2. THINK (Brain + Memory)
+            
+            # Note: We no longer call memory.add_message here because 
+            # brain.think now handles the logging and tool-logic internally!
             print("[JARVIS is thinking...]")
             response_text = brain.think(user_text, memory)
-
-            # 3. SPEAK (Mouth)
+            
             mouth.speak(response_text)
 
-        except KeyboardInterrupt:
-            # Catches CTRL+C in the terminal for a clean exit
-            print("\n[System] Manual shutdown initiated.")
-            break
         except Exception as e:
             # Prevents the whole program from crashing if Ollama or Coqui throws a random error
             print(f"\n[System Error]: {e}")

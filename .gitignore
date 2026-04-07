@@ -1,3 +1,9 @@
 jarvis_env/
 
+__pycache__/
+
+tools/__pycache__/
+
 full_history.txt
+
+ascii_banner.txt

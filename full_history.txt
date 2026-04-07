@@ -1,7 +1,0 @@
-Role: user, Content: I think we're going to do more debt. 
-Role: user, Content: Barnaby time of year. 
-Role: user, Content: Hello, this is your first message. 
-Role: user, Content: You 
-Role: assistant, Content: JARVIS. At your service. 
-Role: user, Content: Hello, this is your first message. 
-Role: assistant, Content: Greetings. How may I assist you? 
