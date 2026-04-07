@@ -20,7 +20,7 @@ class JarvisEars:
         Listens to the microphone and returns the transcribed text.
         """
 
-        with sr.Microphone as source:
+        with sr.Microphone() as source:
             print("\n[JARVIS is listening... Speak now]")
             # Adjust for ambient noise so he doesn't record static
             self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
