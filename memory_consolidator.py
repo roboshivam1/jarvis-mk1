@@ -36,6 +36,7 @@ def consolidate_memory():
         extraction_prompt = f"""
         You are an AI data extractor. Read this portion of a conversation transcript.
         Extract any permanent facts about the user, their preferences, or their projects.
+        Keep the facts as understandable sentences, not just words, so that they can be looked up later as meaningful facts.
         Do NOT invent information. If there are no new facts in this specific chunk, return empty lists.
         
         You MUST output strictly in JSON format matching this exact structure:

@@ -1,16 +1,27 @@
 {
     "user_profile": [
         "The user is a developer building JARVIS.",
-        "Jarvis"
+        "Jarvis",
+        "JARVIS is an artificial intelligence designed to assist and learn from those around him.",
+        "JARVIS was created by Tony Stark."
     ],
     "preferences": [
         "The user prefers concise and witty responses.",
         "dark mode",
-        "ACDC"
+        "ACDC",
+        "AC/DC"
     ],
     "current_projects": [
         "Working on a local AI assistant.",
-        "new backend project"
+        "new backend project",
+        "backend project",
+        "AI assistant",
+        "JARVIS"
     ],
-    "general_facts": []
+    "general_facts": [
+        "Sanjay Dutt was born on July 29, 1959.",
+        "The Claude Mythos Project is a general-purpose language model developed by Anthropic with a focus on computer security tasks.",
+        "searching for sensor calibration tool",
+        "looking for IOT development platform"
+    ]
 }

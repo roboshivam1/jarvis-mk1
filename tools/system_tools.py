@@ -73,8 +73,6 @@ def search_and_play_global_music(query: str) -> str:
         url = f"https://itunes.apple.com/search?term={safe_query}&limit=1&entity=song"
         
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as response:
-            data = json.loads(response.read().decode())
         
         context = ssl._create_unverified_context()
         
